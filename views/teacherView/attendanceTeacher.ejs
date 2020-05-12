@@ -1,0 +1,175 @@
+<%- include("../teacherView/headerTeacher.ejs"); -%>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+    <!-- page content -->
+
+    <div class="right_col" role="main">
+        <hr>
+        <div></div>
+        <br>
+        <br>
+        <div style="background-color: #f9484a;
+		background-image: linear-gradient(315deg, #f9484a 0%, #fbd72b 74%); border-radius: 10cm;">
+            <table border="0px">
+                <tr>
+                    <th>
+                        <p style="color:black;font-weight:bolder;padding-left: 10px;">DATE: <input type="Date" id="datepicker"></p>
+                    </th>
+                    <th></th>
+                    <th> <select id="semid">
+					<option>SEM</option>
+					<option>3</option>
+					<option>6</option>
+					<option>7</option>
+				</select></th>
+                    <th>
+                        <select id="divid">
+					<option>DIV</option>
+					<option>A</option>
+					<option>B</option>
+					</select>
+                    </th>
+                    <th>
+                        <select id="subjectid">
+							<% subject_data.forEach(function(sub_list){ %>
+							<option >
+								<%= sub_list %>
+							</option>
+					<%	}) %>	
+						</select>
+
+                    </th>
+                    <th>
+                        <button id="btnfill">fill</button>
+                    </th>
+                </tr>
+            </table>
+
+
+        </div>
+        <br>
+        <br>
+
+        <div class="col-md-6 col-sm-6  ">
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>Attendance report</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>Roll no</th>
+                                <th>Name</th>
+                                <th>attendance</th>
+                            </tr>
+                        </thead>
+                        <tbody id="attend">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div>
+        <center><button id="btnput">Put</button></center>
+    </div>
+
+    <!-- /page content -->
+    <script>
+        $('#btnfill').click(function() {
+            var sem = $("#semid :selected").text();
+            var div = $("#divid :selected").text();
+            var jsonData = {
+                div: div,
+                sem: sem
+            }
+            $.ajax({
+                url: "/getrecord",
+                method: "POST",
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify(jsonData),
+                cache: false,
+                success: function(res) {
+                    var tablecoulmn = "<tr>";
+
+                    $.each(res, function() {
+
+                        var tablerow = '<td>' + "rollno" + '</td>' + '<td>' + this.name + '</td>' + '<td class="attend" id=' + this.registred_id + ' style="background:green;" onclick="fnstatus(\'' + this.registred_id + '\')">' + "present" + '</td>' + '</tr>';
+                        tablecoulmn = tablecoulmn + tablerow;
+                    });
+
+                    $('#attend').html(tablecoulmn);
+                },
+                error: function(err) {
+                    alert(err);
+                }
+            });
+        });
+
+        function fnstatus(id) {
+            var color = $("#" + id).css("background-color");
+            console.log(color);
+            console.log(id);
+            if (color == "rgb(0, 128, 0)") {
+                $("#" + id).css("background", "red");
+                $("#" + id).html("Absent");
+            } else {
+                $("#" + id).css("background", "green");
+                $("#" + id).html("Present");
+            }
+
+        }
+
+        $('#btnput').click(function() {
+            var teacher_id = '<%=userId%>';
+            var attendance_array = [];
+            var date = $('#datepicker').val();
+            var subject = $("#subjectid :selected").val();
+            $(".attend").each(function() {
+                var student_id = $(this).attr("id");
+                var status = $(this).text();
+                attendance_array.push({
+                    std_id: student_id,
+                    std_status: status,
+                    attendance_by: teacher_id,
+                    attendance_on: date,
+                    sub: subject
+                });
+            });
+
+            var jsonData = JSON.stringify(attendance_array)
+            console.log(jsonData);
+
+            $.ajax({
+                url: "/savestudents",
+                method: "POST",
+                dataType: 'json',
+                contentType: "application/json",
+                data: JSON.stringify({
+                    attendance: jsonData
+                }),
+                cache: false,
+                success: function(res) {
+                    $("#attend").html("");
+
+                },
+                error: function(err) {
+                    alert(err);
+                }
+            });
+
+        });
+    </script>
+
+    <%- include("../teacherView/footerTeacher.ejs"); -%>

@@ -1,0 +1,188 @@
+<%- include("../teacherView/headerTeacher.ejs"); -%>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+    <div class="right_col" role="main">
+        <div id="frame">
+            <div id="sidepanel">
+                <div id="profile">
+                    <div class="wrap">
+                        <img id="profile-img" src="http://emilcarlsson.se/assets/mikeross.png" class="online" alt="" />
+                        <p>Mike Ross</p>
+                        <i class="fa fa-chevron-down expand-button" aria-hidden="true"></i>
+                        <div id="status-options">
+                            <ul>
+                                <li id="status-online" class="active"><span class="status-circle"></span>
+                                    <p>Online</p>
+                                </li>
+                                <li id="status-away"><span class="status-circle"></span>
+                                    <p>Away</p>
+                                </li>
+                                <li id="status-busy"><span class="status-circle"></span>
+                                    <p>Busy</p>
+                                </li>
+                                <li id="status-offline"><span class="status-circle"></span>
+                                    <p>Offline</p>
+                                </li>
+                            </ul>
+                        </div>
+                        <div id="expanded">
+                            <label for="twitter"><i class="fa fa-facebook fa-fw" aria-hidden="true"></i></label>
+                            <input name="twitter" type="text" value="mikeross" />
+                            <label for="twitter"><i class="fa fa-twitter fa-fw" aria-hidden="true"></i></label>
+                            <input name="twitter" type="text" value="ross81" />
+                            <label for="twitter"><i class="fa fa-instagram fa-fw" aria-hidden="true"></i></label>
+                            <input name="twitter" type="text" value="mike.ross" />
+                        </div>
+                    </div>
+                </div>
+                <div id="search">
+                    <label for=""><i class="fa fa-search" aria-hidden="true"></i></label>
+                    <input type="text" placeholder="Search contacts..." />
+                </div>
+                <div id="contacts">
+                    <ul>
+                        <% chatStudents.forEach(function(chat_list){ %>
+                            <li class="contact">
+                                <div class="wrap msgcontainer" id="<%=chat_list.registred_id%>">
+                                    <span class="contact-status online"></span>
+                                    <img src="http://emilcarlsson.se/assets/louislitt.png" alt="" height="50px" width="50px" />
+                                    <div class="meta">
+                                        <p class="preview" id="chatter">
+                                            <%=chat_list.name%>
+                                        </p>
+
+                                    </div>
+
+                                </div>
+                                <p class="preview">You just got LITT up, Mike.</p>
+                            </li>
+
+
+                            <% }) %>
+
+
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content">
+                <div class="contact-profile">
+                    <img src="http://emilcarlsson.se/assets/harveyspecter.png" alt="" />
+                    <p id="chatbc">Harvey Specter</p>
+                    <div class="social-media">
+                        <i class="fa fa-facebook" aria-hidden="true"></i>
+                        <i class="fa fa-twitter" aria-hidden="true"></i>
+                        <i class="fa fa-instagram" aria-hidden="true"></i>
+                    </div>
+                </div>
+                <div class="messages" id="messageList">
+                </div>
+                <div class="message-input">
+                    <div class="wrap">
+                        <input type="text" placeholder="Write message here..." id="chatinfo" />
+                        <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+                        <button class="submit"><i class="fa fa-paper-plane" aria-hidden="true" onclick="fn2()"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <script type="text/javascript">
+        var chatWith = "";
+        var clickedId = "";
+
+        function fn1(id) {
+            var to_id = id;
+            chatWith = to_id;
+            var from_id = '<%= userId %>'
+            var to = to_id;
+            var from = from_id;
+            chat_name = $('#' + to).text();
+            $('#chatbc').text(chat_name);
+
+            var jsonData = {
+                to1: to,
+                from1: from
+            }
+
+            $.ajax({
+                url: "/plz",
+                method: "POST",
+                dataType: 'json',
+                data: JSON.stringify(jsonData),
+                contentType: "application/json",
+                cache: false,
+                success: function(res) {
+                    var jsonData = JSON.stringify(res);
+                    console.log(jsonData);
+                    var messageList = "<ul>";
+                    $.each(res, function() {
+                        console.log('<%= userId %>');
+                        if (this.from.registred_id == '<%= userId %>') {
+                            var sent = '<li class="replies">' +
+                                '<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />' +
+                                '<p>' + this.chat + '</p>' +
+                                '</li>';
+                            messageList = messageList + sent;
+                        } else {
+                            var replies = '<li class="sent">' +
+                                '<img src="http://emilcarlsson.se/assets/mikeross.png" alt="" />' +
+                                '<p>' + this.chat + '</p>' +
+                                '</li>';
+                            messageList = messageList + replies;
+                        }
+                    });
+                    messageList = messageList + "</ul>";
+
+                    $("#messageList").html(messageList)
+                },
+                error: function(err) {
+
+                }
+            });
+
+        }
+
+        function fn2() {
+
+            var send_chat = $("#chatinfo").val();
+            var to_id = chatWith;
+            var from_id = '<%= userId %>'
+
+            var to = to_id;
+            var from = from_id;
+            var jsonData = {
+                to1: to,
+                from1: from,
+                send_chat: send_chat
+            }
+
+            $.ajax({
+                url: "/inbox",
+                method: "POST",
+                dataType: 'json',
+                data: JSON.stringify(jsonData),
+                contentType: "application/json",
+                cache: false,
+                success: function(res) {
+
+                    $("#chatinfo").val(" ");
+                },
+                error: function(err) {
+                    alert(err);
+                }
+            });
+
+        }
+        $(".msgcontainer").click(function() {
+            clickedId = $(this).attr("id");
+            setInterval(function() {
+                fn1(clickedId);
+            }, 3000);
+            fn1(clickedId);
+        });
+    </script>
+    <!-- /page content -->
+    <%- include("../teacherView/footerTeacher.ejs"); -%>

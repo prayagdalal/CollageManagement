@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <!-- Meta, title, CSS, favicons, etc. -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <title>Gentelella Alela! | </title>
+
+    <!-- Bootstrap -->
+    <link href="bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="nprogress/nprogress.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="../build/css/custom.min.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+
+
+
+
+</head>
+
+<body class="nav-md">
+    <div class="container body">
+        <div class="right_col" role="main">
+            <div class="">
+                <div class="page-title">
+                    <div class="title_left">
+                        <h3>Form Validation</h3>
+                    </div>
+
+                    <div class="title_right">
+                        <div class="col-md-5 col-sm-5 form-group pull-right top_search">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button">Go!</button>
+                  </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12">
+                        <div class="x_panel">
+                            <div class="x_title">
+                                <h2>Form validation <small>sub title</small></h2>
+
+                                <div class="clearfix"></div>
+                            </div>
+                            <div class="x_content">
+                                <form class="" action="" method="post" novalidate>
+
+                                    <label for="heard">REGISTRATION FOR:</label>
+                                    <select id="heard" class="form-control" required>
+                            <option value="">Choose..</option>
+                            <option value="Student">Student</option>
+                            <option value="Teacher">Teacher</option>
+                           
+                          </select>
+                                    <br>
+
+                                    <span class="section">Personal Info</span>
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3  label-align">Name<span
+                          class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input class="form-control" data-validate-length-range="6" data-validate-words="2" name="name" placeholder="ex. John f. Kennedy" required="required" id="uname" />
+                                        </div>
+                                    </div>
+
+                                    <div class="field item form-group">
+                                        <label class="col-form-label col-md-3 col-sm-3  label-align">email<span
+                          class="required">*</span></label>
+                                        <div class="col-md-6 col-sm-6">
+                                            <input class="form-control" name="email" class='email' id="uemail" required="required" type="email" /></div>
+                                        <label id="lblmail"></label>
+                                    </div>
+
+                                    <div class="field item form-group">
+
+                                        <label class="col-form-label col-md-3 col-sm-3  label-align">Subject:</label>
+                                        <br>
+                                        <br>
+                                        <br>
+
+                                        <p style="padding: 5px;">
+                                            <input type="checkbox" name="subject[]" id="hobby1" value="C" data-parsley-mincheck="2" required class="flat sub" /> C
+                                            <br />
+
+                                            <input type="checkbox" name="subject[]" id="hobby2" value="C++" class="flat sub" /> C++
+                                            <br />
+
+                                            <input type="checkbox" name="subject[]" id="hobby3" value="PHP" class="flat sub" /> PHP
+                                            <br />
+
+                                            <input type="checkbox" name="subject[]" id="hobby4" value="asp" class="flat sub" /> .NET
+                                            <br />
+                                            <input type="checkbox" name="subject[]" id="hobby4" value="java" class="flat sub" /> JAVA
+                                            <br />
+                                            <input type="checkbox" name="subject[]" id="hobby4" value="ds" class="flat sub" /> Data Structure
+                                            <br />
+                                            <input type="checkbox" name="subject[]" id="hobby4" value="cs" class="flat sub" /> CS
+                                            <br />
+                                            <input type="checkbox" name="subject[]" id="hobby4" value="cn" class="flat sub" />Computer Network
+                                            <br />
+
+
+                                            <p>
+                                    </div>
+                            </div>
+
+                            <label class="col-form-label col-md-3 col-sm-3 label-align">Gender</label>
+                            <br>
+                            <br>
+
+                            <label>
+                          <input type="radio" name="gender" value="male" id="umale"  >&nbsp;&nbsp;Male 
+                        </label> &nbsp;&nbsp;
+                            <label>
+                          <input type="radio" name="gender" value="female" id="ufemale" >&nbsp;&nbsp;Female
+                        </label>
+
+                            <br>
+                            <br>
+                            <label class="col-form-label col-md-3 col-sm-3  label-align">DOB<span
+                            class="required">*</span></label>
+                            <div class="col-md-6 col-sm-6">
+                                <input class="form-control" class='date' type="date" name="date" id="udate" required='required'></div>
+                            <br>
+                            <br>
+                            <br>
+
+                            <div class="col-md-6 offset-md-3">
+                                <button class="btn btn-primary" id="btns" type="button">Submit</button>
+                                <button type='reset' class="btn btn-success">Reset</button>
+                            </div>
+
+                        </div>
+
+                        <div class="field item form-group">
+
+                        </div>
+
+                    </div>
+                    <div class="field item form-group">
+
+                    </div>
+
+
+                    <div class="ln_solid">
+                        <div class="form-group">
+                            <div class="col-md-6 offset-md-3">
+
+                            </div>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="validator/multifield.js"></script>
+    <script src="validator/validator.js"></script>
+
+    <script>
+        // initialize a validator instance from the "FormValidator" constructor.
+        // A "<form>" element is optionally passed as an argument, but is not a must
+        var validator = new FormValidator({
+            "events": ['blur', 'input', 'change']
+        }, document.forms[0]);
+    </script>
+
+    <!-- jQuery -->
+    <script src="jquery/dist/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function validateEmail() {
+            var email1 = $('#uemail').val();
+            var name1 = $('#uname').val();
+            var dob1 = $('#udate').val();
+
+            if ($('#umale').prop("checked")) {
+                var gender1 = $('#umale').val();
+
+            } else {
+                var gender1 = $('#ufemale').val();
+            }
+            var checked_subject = $('.sub:checked').map(function() {
+                return this.value;
+            }).get().join(', ')
+
+            $.ajax({
+                url: "/teacherRegistration",
+                method: "POST",
+                data: {
+                    namej: name1,
+                    emailj: email1,
+                    genderj: gender1,
+                    dobj: dob1,
+                    checked_subject1: checked_subject
+                },
+
+                contentType: "application/x-www-form-urlencoded",
+                success: function(res) {
+                    console.log(res.exist);
+                    $('#lblmail').html(res.exist);
+
+                },
+                error: function(err) {
+                    alert(err);
+
+                }
+            });
+        }
+        $(document).ready(function() {
+            $('#btns').click(function(e) {
+                validateEmail();
+            })
+        });
+    </script>
+</body>
+
+</html>
