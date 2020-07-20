@@ -19,7 +19,7 @@
     "express-mailer": "^0.3.1",
     "express-session": "^1.17.1",
     "http-msgs": "^1.0.9",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.19",
     "mangodb": "^1.0.0",
     "md5": "^2.2.1",
     "moment-timezone": "^0.5.28",
